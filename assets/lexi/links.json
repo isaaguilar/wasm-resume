@@ -1,0 +1,54 @@
+{
+    "id": "links",
+    "lex": {
+        "translations": {
+            "english": "Links"
+        }
+    },
+    "choices": [
+        {
+            "id": "github",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "My Github\n    https://github.com/isaaguilar\n\n"
+                    }
+                },
+                "link": "https://github.com/isaaguilar"
+            }
+        },
+        {
+            "id": "galleybytes",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "My Github Org - GalleyBytes\n   https://github.com/galleybytes\n\n"
+                    }
+                },
+                "link": "https://github.com/galleybytes"
+            }
+        },
+        {
+            "id": "linkedin",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "My LinkedIn\n    https://www.linkedin.com/in/isa-aguilar\n\n"
+                    }
+                },
+                "link": "https://www.linkedin.com/in/isa-aguilar/"
+            }
+        },
+        {
+            "id": "back",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "Back"
+                    }
+                },
+                "next_id": "home"
+            }
+        }
+    ]
+}

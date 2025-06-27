@@ -1,0 +1,43 @@
+{
+    "id": "homedev",
+    "lex": {
+        "translations": {
+            "english": "Development at Home"
+        }
+    },
+    "choices": [
+        {
+            "id": "_1",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "Pico Party Light"
+                    }
+                },
+                "next_id": "picoparty"
+            }
+        },
+        {
+            "id": "_2",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "\"Pumpkin\" Sound Converter - Native Ui"
+                    }
+                },
+                "next_id": "pumpkinsound"
+            }
+        },
+        {
+            "id": "back",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "Back"
+                    }
+                },
+                "next_id": "home"
+            }
+        }
+    ]
+}

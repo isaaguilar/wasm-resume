@@ -1,0 +1,53 @@
+{
+    "id": "work",
+    "lex": {
+        "translations": {
+            "english": "Work Experience"
+        }
+    },
+    "choices": [
+        {
+            "id": "_1",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "Illumina\n   Senior Staff DevOps Engineer\n   Jan 2018 to Apr 2025"
+                    }
+                }
+            }
+        },
+        {
+            "id": "_2",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "Tillster\n   Senior DevOps Engineer\n   Jan 2016 to Jan 2018"
+                    }
+                },
+                "next_id": "work"
+            }
+        },
+        {
+            "id": "_3",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "Audit MicroControls\n   IT Director\n   May 2013 to Jan 2016"
+                    }
+                },
+                "next_id": "work"
+            }
+        },
+        {
+            "id": "back",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "Back"
+                    }
+                },
+                "next_id": "home"
+            }
+        }
+    ]
+}

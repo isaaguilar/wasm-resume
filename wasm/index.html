@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Isa Aguilar - 2025</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background-color: rgb(51, 51, 51);
+            scrollbar-width: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .spinner {
+            width: 64px;
+            height: 64px;
+            border: 8px solid #444;
+            border-top: 8px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body style="margin: 0px;">
+    <div id="load_spinner" class="spinner"></div>
+    <script type="module">
+        import './restart-audio-context.js'
+        import init from './bevy_game.js'
+
+        init().then(() => {
+            const spinner = document.getElementById('load_spinner');
+            if (spinner) {
+                spinner.remove();
+            }
+        }).catch((error) => {
+            if (!error.message.startsWith("Using exceptions for control flow, don't mind me. This isn't actually an error!")) {
+                throw error;
+            }
+        });
+    </script>
+
+</body>
+
+</html>

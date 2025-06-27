@@ -1,0 +1,24 @@
+{
+    "id": "pumpkinsound",
+    "lex": {
+        "translations": {
+            "english": "Pumpkin Sound Converter"
+        }
+    },
+    "image_reel": [
+        "pumpkin-sound.png"
+    ],
+    "choices": [
+        {
+            "id": "back",
+            "choice": {
+                "lex": {
+                    "translations": {
+                        "english": "Back"
+                    }
+                },
+                "next_id": "homedev"
+            }
+        }
+    ]
+}
