@@ -15,12 +15,13 @@ fn preload(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.insert_resource(LexiCollection::<ResumeData>::new(
         &asset_server,
         vec![
-            "lexi/home.json",
-            "lexi/work.json",
-            "lexi/homedev.json",
-            "lexi/homedev/pico-party.json",
-            "lexi/homedev/pumpkin-sound.json",
-            "lexi/links.json",
+            // "lexi/home.json",
+            // "lexi/work.json",
+            // "lexi/homedev.json",
+            // "lexi/homedev/pico-party.json",
+            // "lexi/homedev/pumpkin-sound.json",
+            // "lexi/links.json",
+            "lexi/blank.json",
         ],
     ));
 }

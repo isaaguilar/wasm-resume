@@ -3,10 +3,11 @@ use std::collections::HashMap;
 
 use crate::AppState;
 
+pub mod desktop;
 pub mod resume;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_plugins(resume::plugin);
+    app.add_plugins((resume::plugin, desktop::plugin));
     app.add_systems(Update, preload.run_if(in_state(AppState::Preload)));
 }
 
@@ -31,6 +32,7 @@ impl<A: Asset + TypePath> LexiCollection<A> {
 #[derive(serde::Deserialize, Asset, TypePath, Debug, Default, Clone)]
 pub struct Lexicon {
     pub translations: HashMap<String, String>,
+    pub style: Option<String>,
 }
 
 impl Lexicon {

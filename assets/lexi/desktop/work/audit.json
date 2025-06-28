@@ -1,0 +1,23 @@
+{
+    "id": "audit",
+    "lex": {
+        "translations": {
+            "english": "Audit Micro Controls"
+        }
+    },
+    "window": true,
+    "next_id": "work",
+    "window_image": "window2",
+    "note": {
+        "lex": {
+            "style": "black",
+            "translations": {
+                "english": "Audit Micro Controls\nIT Director\nMay 2013 - Jan 2016"
+            }
+        },
+        "position": [
+            200,
+            -200
+        ]
+    }
+}

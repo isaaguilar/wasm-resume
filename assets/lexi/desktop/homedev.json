@@ -1,0 +1,56 @@
+{
+    "id": "homedev",
+    "lex": {
+        "translations": {
+            "english": "Development as Home"
+        }
+    },
+    "window": true,
+    "next_id": "home",
+    "icons": [
+        {
+            "id": "picoparty",
+            "icon": {
+                "file": "notepad.png",
+                "index": 2,
+                "size": [
+                    64,
+                    64
+                ]
+            },
+            "lex": {
+                "style": "black",
+                "translations": {
+                    "english": "Pico Party Light"
+                }
+            },
+            "next_id": "picoparty",
+            "position": [
+                228,
+                128
+            ]
+        },
+        {
+            "id": "_2",
+            "icon": {
+                "file": "notepad.png",
+                "index": 2,
+                "size": [
+                    64,
+                    64
+                ]
+            },
+            "lex": {
+                "style": "black",
+                "translations": {
+                    "english": "\"Pumpkin\" Sound Converter"
+                }
+            },
+            "next_id": "pumpkinsound",
+            "position": [
+                528,
+                228
+            ]
+        }
+    ]
+}

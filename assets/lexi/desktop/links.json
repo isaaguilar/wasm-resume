@@ -1,0 +1,75 @@
+{
+    "id": "links",
+    "lex": {
+        "translations": {
+            "english": "Links"
+        }
+    },
+    "window": true,
+    "next_id": "home",
+    "links": [
+        {
+            "id": "_1",
+            "icon": {
+                "size": [
+                    64,
+                    64
+                ],
+                "index": 0
+            },
+            "lex": {
+                "style": "black",
+                "translations": {
+                    "english": "My Github\nhttps://github.com/isaaguilar\n\n"
+                }
+            },
+            "link": "https://github.com/isaaguilar",
+            "position": [
+                228,
+                120
+            ]
+        },
+        {
+            "id": "_2",
+            "icon": {
+                "size": [
+                    64,
+                    64
+                ],
+                "index": 0
+            },
+            "lex": {
+                "style": "black",
+                "translations": {
+                    "english": "My Github Org - GalleyBytes\nhttps://github.com/galleybytes\n\n"
+                }
+            },
+            "link": "https://github.com/galleybytes",
+            "position": [
+                228,
+                270
+            ]
+        },
+        {
+            "id": "_3",
+            "icon": {
+                "size": [
+                    64,
+                    64
+                ],
+                "index": 2
+            },
+            "lex": {
+                "style": "black",
+                "translations": {
+                    "english": "My LinkedIn\nhttps://www.linkedin.com/in/isa-aguilar\n\n"
+                }
+            },
+            "link": "https://www.linkedin.com/in/isa-aguilar",
+            "position": [
+                228,
+                420
+            ]
+        }
+    ]
+}

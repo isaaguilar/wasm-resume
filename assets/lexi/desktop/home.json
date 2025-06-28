@@ -1,0 +1,73 @@
+{
+    "id": "home",
+    "lex": {
+        "translations": {
+            "english": "Isa Aguilar\nDevelopment - \"Plain and Simple\""
+        }
+    },
+    "icons": [
+        {
+            "id": "work",
+            "icon": {
+                "file": "notepad.png",
+                "index": 0,
+                "size": [
+                    64,
+                    64
+                ]
+            },
+            "lex": {
+                "translations": {
+                    "english": "Work Experience"
+                }
+            },
+            "next_id": "work",
+            "position": [
+                228,
+                192
+            ]
+        },
+        {
+            "id": "home",
+            "icon": {
+                "file": "notepad.png",
+                "index": 2,
+                "size": [
+                    64,
+                    64
+                ]
+            },
+            "lex": {
+                "translations": {
+                    "english": "Dev at Home"
+                }
+            },
+            "next_id": "homedev",
+            "position": [
+                460,
+                370
+            ]
+        },
+        {
+            "id": "links",
+            "icon": {
+                "file": "notepad.png",
+                "index": 4,
+                "size": [
+                    64,
+                    64
+                ]
+            },
+            "lex": {
+                "translations": {
+                    "english": "Links"
+                }
+            },
+            "next_id": "links",
+            "position": [
+                740,
+                208
+            ]
+        }
+    ]
+}

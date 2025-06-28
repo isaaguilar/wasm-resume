@@ -1,0 +1,23 @@
+{
+    "id": "tillster",
+    "lex": {
+        "translations": {
+            "english": "Tillster"
+        }
+    },
+    "window": true,
+    "next_id": "work",
+    "window_image": "window2",
+    "note": {
+        "lex": {
+            "style": "black",
+            "translations": {
+                "english": "Tillster\nStaff DevOps Engineer\nJan 2016 - Jan 2018"
+            }
+        },
+        "position": [
+            200,
+            -200
+        ]
+    }
+}

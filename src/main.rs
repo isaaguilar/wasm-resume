@@ -2,6 +2,9 @@ use bevy::{asset::AssetMetaCheck, prelude::*};
 use bevy_aspect_ratio_mask::{AspectRatioMask, AspectRatioPlugin, Resolution};
 
 mod assets;
+mod desktop;
+#[cfg(feature = "dev")]
+mod dev_tools;
 mod resume;
 mod util;
 
@@ -45,6 +48,7 @@ fn main() {
                     primary_window: Some(Window {
                         title: "Aspect Ratio Mask".into(),
                         name: Some("Aspect Ratio Mask".into()),
+                        resolution: (RESOLUTION_X, RESOLUTION_Y).into(),
                         fit_canvas_to_parent: true,
                         ..default()
                     }),
@@ -62,9 +66,9 @@ fn main() {
                 height: RESOLUTION_Y,
             },
             mask: AspectRatioMask {
-                color: Color::srgb(0.2, 0.2, 0.2),
+                color: Color::srgb(0.02, 0.02, 0.02),
             },
         })
-        .add_plugins((assets::plugin, resume::Menu, util::plugin))
+        .add_plugins((assets::plugin, desktop::Menu, resume::Menu, util::plugin))
         .run();
 }

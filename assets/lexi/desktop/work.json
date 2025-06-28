@@ -1,0 +1,78 @@
+{
+    "id": "work",
+    "lex": {
+        "translations": {
+            "english": "Work Experience"
+        }
+    },
+    "window": true,
+    "next_id": "home",
+    "icons": [
+        {
+            "id": "_1",
+            "icon": {
+                "file": "notepad.png",
+                "index": 0,
+                "size": [
+                    64,
+                    64
+                ]
+            },
+            "lex": {
+                "style": "black",
+                "translations": {
+                    "english": "Illumina"
+                }
+            },
+            "next_id": "illumina",
+            "position": [
+                228,
+                128
+            ]
+        },
+        {
+            "id": "_2",
+            "icon": {
+                "file": "notepad.png",
+                "index": 0,
+                "size": [
+                    64,
+                    64
+                ]
+            },
+            "lex": {
+                "style": "black",
+                "translations": {
+                    "english": "Tillster"
+                }
+            },
+            "next_id": "tillster",
+            "position": [
+                428,
+                128
+            ]
+        },
+        {
+            "id": "_3",
+            "icon": {
+                "file": "notepad.png",
+                "index": 0,
+                "size": [
+                    64,
+                    64
+                ]
+            },
+            "lex": {
+                "style": "black",
+                "translations": {
+                    "english": "Audit MicroControls"
+                }
+            },
+            "next_id": "audit",
+            "position": [
+                628,
+                128
+            ]
+        }
+    ]
+}

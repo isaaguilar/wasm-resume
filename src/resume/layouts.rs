@@ -22,7 +22,7 @@ pub fn menu_layout(width: f32) -> impl Bundle {
             width: Val::Px(width),
             // always center
             left: Val::Px((RESOLUTION_X - width) / 2.0),
-            top: Px(60.0),
+            top: Px(30.0),
             align_content: AlignContent::Center,
             justify_content: JustifyContent::Center,
 

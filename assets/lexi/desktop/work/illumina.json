@@ -1,0 +1,23 @@
+{
+    "id": "illumina",
+    "lex": {
+        "translations": {
+            "english": "Illumina"
+        }
+    },
+    "window": true,
+    "window_image": "window2",
+    "next_id": "work",
+    "note": {
+        "lex": {
+            "style": "black",
+            "translations": {
+                "english": "Illumina\nSenior Staff DevOps Engineer\nJan 2018 - Apr 2025"
+            }
+        },
+        "position": [
+            0,
+            0
+        ]
+    }
+}

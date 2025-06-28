@@ -1,0 +1,24 @@
+{
+    "id": "pumpkinsound",
+    "lex": {
+        "translations": {
+            "english": "\"Pumpkin\" Sound Converter"
+        }
+    },
+    "window": true,
+    "next_id": "homedev",
+    "window_image": "window2",
+    "image": "pumpkin-sound.png",
+    "note": {
+        "lex": {
+            "style": "black",
+            "translations": {
+                "english": "\nThis little sound converter was a native ui project\nwritten in Rust which opens a file-selector,\nand converts the selected audio file to an mp3 type."
+            }
+        },
+        "position": [
+            200,
+            -200
+        ]
+    }
+}

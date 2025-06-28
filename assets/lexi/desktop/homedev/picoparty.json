@@ -1,0 +1,24 @@
+{
+    "id": "picoparty",
+    "lex": {
+        "translations": {
+            "english": "Raspberry Pi Pico - Party Light"
+        }
+    },
+    "window": true,
+    "next_id": "homedev",
+    "window_image": "window2",
+    "image": "pico-party.png",
+    "note": {
+        "lex": {
+            "style": "black",
+            "translations": {
+                "english": "\nCreated a fun little color-rotating light\ncomplete with button activation."
+            }
+        },
+        "position": [
+            200,
+            -200
+        ]
+    }
+}

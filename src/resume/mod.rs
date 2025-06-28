@@ -8,7 +8,7 @@ use bevy_aspect_ratio_mask::Hud;
 
 mod actions;
 mod inputs;
-mod layouts;
+pub mod layouts;
 
 pub struct Menu;
 
@@ -66,10 +66,10 @@ impl Default for CurrentSelection {
 }
 
 #[derive(Event)]
-struct ChangeMenu(String);
+pub struct ChangeMenu(pub String);
 
 impl ChangeMenu {
-    fn new(s: impl Into<String>) -> Self {
+    pub fn new(s: impl Into<String>) -> Self {
         Self(s.into())
     }
 }
@@ -138,9 +138,9 @@ fn change_menu(
     let dialog = match &dialog_message.opt {
         Some(d) => d,
         None => {
-            for (entity, _) in dialog_display_query.iter() {
-                commands.entity(entity).despawn();
-            }
+            // for (entity, _) in dialog_display_query.iter() {
+            //     commands.entity(entity).despawn();
+            // }
             return;
         }
     };
