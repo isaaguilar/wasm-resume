@@ -1,5 +1,5 @@
 use bevy::prelude::*;
 
-pub(super) fn plugin(app: &mut App) {}
+pub(super) fn _plugin(_app: &mut App) {}
 
-fn reload() {}
+fn _reload() {}

@@ -4,10 +4,9 @@ use std::collections::HashMap;
 use crate::AppState;
 
 pub mod desktop;
-pub mod resume;
 
 pub(super) fn plugin(app: &mut App) {
-    app.add_plugins((resume::plugin, desktop::plugin));
+    app.add_plugins(desktop::plugin);
     app.add_systems(Update, preload.run_if(in_state(AppState::Preload)));
 }
 

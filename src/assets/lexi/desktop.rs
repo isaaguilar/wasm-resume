@@ -49,7 +49,6 @@ pub struct Note {
 
 #[derive(serde::Deserialize, Asset, TypePath, Debug, Default, Clone)]
 pub struct Icon {
-    pub id: String,
     pub icon: IconData,
     pub lex: Lexicon,
     pub next_id: Option<String>,
@@ -59,7 +58,6 @@ pub struct Icon {
 
 #[derive(serde::Deserialize, Asset, TypePath, Debug, Default, Clone)]
 pub struct Link {
-    pub id: String,
     pub icon: IconData,
     pub lex: Lexicon,
     pub position: [f32; 2],
@@ -68,7 +66,6 @@ pub struct Link {
 
 #[derive(serde::Deserialize, Asset, TypePath, Debug, Default, Clone)]
 pub struct IconData {
-    pub file: Option<String>,
     pub size: [f32; 2],
     pub index: usize,
 }

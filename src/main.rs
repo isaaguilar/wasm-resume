@@ -5,7 +5,6 @@ mod assets;
 mod desktop;
 #[cfg(feature = "dev")]
 mod dev_tools;
-mod resume;
 mod util;
 
 const RESOLUTION_X: f32 = 1024.0;
@@ -69,6 +68,6 @@ fn main() {
                 color: Color::srgb(0.02, 0.02, 0.02),
             },
         })
-        .add_plugins((assets::plugin, desktop::Menu, resume::Menu, util::plugin))
+        .add_plugins((assets::plugin, desktop::Menu, util::plugin))
         .run();
 }

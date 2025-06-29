@@ -9,7 +9,6 @@ use crate::util::handles::BODY_FONT;
 // use crate::assets::lexi::resume::{Choice, ResumeData};
 use crate::RESOLUTION_Y;
 use crate::assets::lexi::desktop::DesktopData;
-use crate::resume::ChangeMenu;
 use bevy::color::palettes::css::BLACK;
 use bevy::color::palettes::css::WHITE;
 use bevy::prelude::*;
@@ -17,6 +16,7 @@ use bevy_aspect_ratio_mask::Hud;
 
 mod actions;
 mod inputs;
+mod layouts;
 
 pub struct Menu;
 
@@ -24,23 +24,14 @@ impl Plugin for Menu {
     fn build(&self, app: &mut App) {
         app.insert_resource(ActiveMenu::default());
         app.insert_resource(ActiveLink::default());
-        // app.add_event::<ChangeMenu>();
+        app.add_event::<ChangeMenu>();
         app.add_event::<InitSelection>();
 
         app.add_systems(OnEnter(AppState::Resume), menu_setup)
             .add_systems(
                 Update,
-                move_choice_marker.run_if(in_state(AppState::Resume)),
-            )
-            .add_systems(
-                Update,
                 change_desktop.run_if(on_event::<ChangeMenu>.and(in_state(AppState::Resume))),
             )
-            // .add_systems(
-            //     Update,
-            //     init_selection_markers
-            //         .run_if(on_event::<InitSelection>.and(in_state(AppState::Resume))),
-            // )
             .add_systems(OnExit(AppState::Resume), leave_menu);
 
         app.add_plugins(inputs::plugin);
@@ -73,26 +64,17 @@ impl Default for CurrentSelection {
     }
 }
 
-// #[derive(Event)]
-// struct ChangeMenu(String);
-
-// impl ChangeMenu {
-//     fn new(s: impl Into<String>) -> Self {
-//         Self(s.into())
-//     }
-// }
-
 #[derive(Event)]
-struct InitSelection;
+struct ChangeMenu(String);
 
-#[derive(Component)]
-struct Language(String);
-
-impl Language {
+impl ChangeMenu {
     fn new(s: impl Into<String>) -> Self {
         Self(s.into())
     }
 }
+
+#[derive(Event)]
+struct InitSelection;
 
 #[derive(Component)]
 struct GoToMenu(String);
@@ -103,15 +85,11 @@ impl GoToMenu {
     }
 }
 
-fn menu_setup(
-    mut commands: Commands,
-    mut bg: ResMut<ClearColor>,
-    display_language: ResMut<DisplayLanguage>,
-) {
+fn menu_setup(mut commands: Commands, mut bg: ResMut<ClearColor>) {
     info!("Menu");
-    info!(language = display_language.0);
+
     bg.0 = Color::srgb(0.2, 0.2, 0.2);
-    // commands.spawn((StateScoped(AppState::Resume), Camera2d::default()));
+    commands.spawn((StateScoped(AppState::Resume), Camera2d::default()));
 
     commands.send_event(ChangeMenu::new("home"));
     return;
@@ -128,7 +106,6 @@ fn change_desktop(
     dialog_display_query: Query<(Entity, &DialogDisplay), With<DialogDisplay>>,
     hud: Res<Hud>,
 ) {
-    info!("Spawning menu");
     let hud_entity = hud.0;
 
     let Some(event) = changes.read().next() else {
@@ -147,9 +124,6 @@ fn change_desktop(
     let dialog = match &dialog_message.opt {
         Some(d) => d,
         None => {
-            // for (entity, _) in dialog_display_query.iter() {
-            //     commands.entity(entity).despawn();
-            // }
             return;
         }
     };
@@ -168,7 +142,7 @@ fn change_desktop(
             .spawn((
                 StateScoped(AppState::Resume),
                 DialogDisplay(dialog.id.clone()),
-                crate::resume::layouts::menu_layout(RESOLUTION_X - 2. * padding_x),
+                layouts::menu_layout(RESOLUTION_X - 2. * padding_x),
             ))
             .with_children(|parent| {
                 let text = dialog.lex.from_language(&display_language.0);
@@ -225,7 +199,6 @@ fn change_desktop(
 
                         match &dialog.note {
                             Some(note) => {
-                                info!("let ther be note");
                                 let font_color = match &note.lex.style {
                                     Some(color_string) => match color_string.as_str() {
                                         "black" => TextColor(BLACK.into()),
@@ -244,8 +217,8 @@ fn change_desktop(
                                         Name::new(format!("Note")),
                                         Node {
                                             position_type: PositionType::Relative,
-                                            left: Val::Px(60.),
-                                            top: Val::Px(80.),
+                                            left: Val::Px(note.position[0]),
+                                            top: Val::Px(note.position[1]),
                                             width: Val::Px(700.),
                                             height: Val::Px(500.),
                                             ..default()
@@ -286,7 +259,6 @@ fn change_desktop(
                                 ..default()
                             },
                             Pickable::default(),
-                            // SelectionMarker(icon.clone()),
                             ImageNode {
                                 image: assets.close.clone(),
                                 texture_atlas: Some(TextureAtlas {
@@ -329,10 +301,8 @@ fn change_desktop(
                         ));
                     }
                 } else {
-                    parent.spawn(crate::resume::layouts::header_layout(&text));
+                    parent.spawn(layouts::header_layout(&text));
                 }
-
-                // parent.spawn(crate::resume::layouts::header_layout(&text));
 
                 match &dialog.icons {
                     Some(icons) => {
@@ -353,7 +323,7 @@ fn change_desktop(
 
                             let mut button = parent.spawn((
                                 // BackgroundColor(DARK_ORCHID.into()),
-                                crate::resume::layouts::MenuOption,
+                                layouts::MenuOption,
                                 Name::new(format!("Button {}", text)),
                                 Node {
                                     position_type: PositionType::Absolute,
@@ -398,7 +368,6 @@ fn change_desktop(
                                 ),],
                             ));
 
-                            button.observe(inputs::mouse_move);
                             button.observe(inputs::mouse_over);
                             button.observe(inputs::mouse_out);
 
@@ -408,24 +377,6 @@ fn change_desktop(
                                 }
                                 None => {}
                             }
-
-                            // match &icon.action {
-                            //     Some(action) => match action.as_str() {
-                            //         "start_game" => {
-                            //             button.observe(inputs::click_start_game);
-                            //         }
-                            //         "show_credits" => {
-                            //             button.observe(inputs::click_show_credits);
-                            //         }
-                            //         "english" | "spanish" => {
-                            //             button
-                            //                 .insert(Language::new(action))
-                            //                 .observe(inputs::click_language_selection);
-                            //         }
-                            //         _ => {}
-                            //     },
-                            //     None => {}
-                            // }
 
                             match &icon.next_id {
                                 Some(id) => {
@@ -459,7 +410,7 @@ fn change_desktop(
 
                             let mut button = parent.spawn((
                                 // BackgroundColor(DARK_ORCHID.into()),
-                                crate::resume::layouts::MenuOption,
+                                layouts::MenuOption,
                                 Name::new(format!("Button {}", text)),
                                 Node {
                                     position_type: PositionType::Absolute,
@@ -520,243 +471,10 @@ fn change_desktop(
             });
     });
 
-    // commands.send_event(InitSelection);
     return;
 }
 
-// fn change_window(
-//     mut changes: EventReader<ChangeMenu>,
-//     mut commands: Commands,
-//     asset_server: Res<AssetServer>,
-//     assets: Res<IconAssets>,
-//     display_language: ResMut<DisplayLanguage>,
-//     mut dialog_message: ResMut<ActiveMenu>,
-//     desktop_data: Res<Assets<DesktopData>>,
-//     dialog_display_query: Query<(Entity, &DialogDisplay), With<DialogDisplay>>,
-//     hud: Res<Hud>,
-// ) {
-//     info!("Spawning menu");
-//     let hud_entity = hud.0;
-
-//     let Some(event) = changes.read().next() else {
-//         return;
-//     };
-
-//     let menu_id = &event.0;
-
-//     dialog_message.opt = desktop_data
-//         .into_inner()
-//         .iter()
-//         .filter(|(_, data)| data.id == menu_id.clone())
-//         .map(|(_, data)| data.clone())
-//         .next();
-
-//     let dialog = match &dialog_message.opt {
-//         Some(d) => d,
-//         None => {
-//             // for (entity, _) in dialog_display_query.iter() {
-//             //     commands.entity(entity).despawn();
-//             // }
-//             return;
-//         }
-//     };
-
-//     for (entity, dialog_display) in dialog_display_query.iter() {
-//         if dialog_display.0 != dialog.id {
-//             commands.entity(entity).despawn();
-//         } else {
-//             return;
-//         }
-//     }
-
-//     let padding_x = RESOLUTION_X / 32.0;
-//     commands.entity(hud_entity).with_children(|parent| {
-//         parent
-//             .spawn((
-//                 StateScoped(AppState::Resume),
-//                 DialogDisplay(dialog.id.clone()),
-//                 crate::resume::layouts::menu_layout(RESOLUTION_X - 2. * padding_x),
-//             ))
-//             .with_children(|parent| {
-//                 let text = dialog.lex.from_language(&display_language.0);
-
-//                 parent.spawn(crate::resume::layouts::header_layout(&text));
-
-//                 // if let Some(images) = &dialog.image_reel {
-//                 //     if let Some(image) = images.first() {
-//                 //         parent.spawn(crate::resume::layouts::image_reel_layout(
-//                 //             asset_server.load(image),
-//                 //         ));
-//                 //     }
-//                 // }
-
-//                 match &dialog.icons {
-//                     Some(icons) => {
-//                         for (_index, icon) in icons.iter().enumerate() {
-//                             let text = format!("  {}", icon.lex.from_language(&display_language.0));
-
-//                             let (image, layout) =
-//                                 (assets.notepad.clone(), assets.notepad_layout.clone());
-
-//                             let mut button = parent.spawn((
-//                                 // BackgroundColor(DARK_ORCHID.into()),
-//                                 crate::resume::layouts::MenuOption,
-//                                 Name::new(format!("Button {}", text)),
-//                                 Node {
-//                                     position_type: PositionType::Absolute,
-//                                     left: Val::Px(icon.position[0]),
-//                                     top: Val::Px(icon.position[1]),
-//                                     width: Val::Px(icon.icon.size[0]),
-//                                     height: Val::Px(icon.icon.size[1]),
-
-//                                     ..default()
-//                                 },
-//                                 Pickable::default(),
-//                                 SelectionMarker(icon.clone()),
-//                                 ImageNode {
-//                                     image: image,
-//                                     texture_atlas: Some(TextureAtlas {
-//                                         layout: layout,
-//                                         index: icon.icon.index,
-//                                     }),
-//                                     ..default()
-//                                 },
-//                                 children![(
-//                                     Node {
-//                                         position_type: PositionType::Absolute,
-//                                         left: Val::Px(-1.7 * icon.icon.size[0]),
-//                                         top: Val::Px(icon.icon.size[1]),
-//                                         width: Val::Px(icon.icon.size[0] * 4.),
-//                                         height: Val::Px(icon.icon.size[1]),
-//                                         ..default()
-//                                     },
-//                                     Text::default(),
-//                                     TextLayout::default().with_justify(JustifyText::Center),
-//                                     children![(
-//                                         TextFont::from_font(BODY_FONT)
-//                                             .with_font_size(RESOLUTION_Y * 6. / 8. / 36.)
-//                                             .with_line_height(
-//                                                 bevy::text::LineHeight::RelativeToFont(1.5)
-//                                             ),
-//                                         Pickable::IGNORE,
-//                                         TextSpan::new(format!("{}", text)),
-//                                     )]
-//                                 ),],
-//                             ));
-
-//                             button.observe(inputs::mouse_move);
-//                             button.observe(inputs::mouse_over);
-//                             button.observe(inputs::mouse_out);
-
-//                             match &icon.link {
-//                                 Some(_) => {
-//                                     button.observe(inputs::click_link);
-//                                 }
-//                                 None => {}
-//                             }
-
-//                             // match &icon.action {
-//                             //     Some(action) => match action.as_str() {
-//                             //         "start_game" => {
-//                             //             button.observe(inputs::click_start_game);
-//                             //         }
-//                             //         "show_credits" => {
-//                             //             button.observe(inputs::click_show_credits);
-//                             //         }
-//                             //         "english" | "spanish" => {
-//                             //             button
-//                             //                 .insert(Language::new(action))
-//                             //                 .observe(inputs::click_language_selection);
-//                             //         }
-//                             //         _ => {}
-//                             //     },
-//                             //     None => {}
-//                             // }
-
-//                             match &icon.next_id {
-//                                 Some(id) => {
-//                                     button
-//                                         .insert(GoToMenu::new(id))
-//                                         .observe(inputs::click_menu_selection);
-//                                 }
-//                                 None => {}
-//                             }
-//                         }
-//                     }
-//                     None => {}
-//                 }
-//             });
-//     });
-
-//     // commands.send_event(InitSelection);
-//     return;
-// }
-
-// fn init_selection_markers(
-//     _: EventReader<InitSelection>,
-//     button: Query<&SelectionMarker>,
-//     mut current_selection: ResMut<CurrentSelection>,
-// ) {
-//     if let Some(next) = button.iter().next() {
-//         current_selection.0 = Some(next.0.clone());
-//     };
-// }
-
-fn move_choice_marker(
-    display_language: ResMut<DisplayLanguage>,
-    dialog_message: Res<ActiveMenu>,
-    current_selection: Res<CurrentSelection>,
-    // mut button: Query<&mut BackgroundColor>,
-    mut selections: Query<(&mut TextSpan, &ChildOf), With<crate::resume::layouts::MenuOption>>,
-) {
-    // let Some(current_choice) = &current_selection.0 else {
-    //     return;
-    // };
-
-    // let dialog = match &dialog_message.opt {
-    //     Some(d) => d,
-    //     None => {
-    //         return;
-    //     }
-    // };
-
-    // let choices = match &dialog.choices {
-    //     Some(choices) => {
-    //         if choices.is_empty() {
-    //             return;
-    //         }
-    //         choices
-    //     }
-    //     None => return,
-    // };
-
-    // for (idx, choice) in choices.iter().enumerate() {
-    //     let text = choice.choice.lex.from_language(&display_language.0);
-
-    //     if current_choice.id == choice.id.clone() {
-    //         for (text_idx, (mut text_span, _parent)) in selections.iter_mut().enumerate() {
-    //             if idx == text_idx {
-    //                 *text_span = TextSpan::new(format!("> {}", text.clone()));
-    //                 // if let Ok(mut bg) = button.get_mut(parent.0) {
-    //                 //     bg.0 = DARK_ORCHID.into();
-    //                 // }
-    //             }
-    //         }
-    //     } else {
-    //         for (text_idx, (mut text_span, _parent)) in selections.iter_mut().enumerate() {
-    //             if idx == text_idx {
-    //                 *text_span = TextSpan::new(format!("  {}", text.clone()));
-    //                 // if let Ok(mut bg) = button.get_mut(parent.0) {
-    //                 //     bg.0 = ORCHID.into();
-    //                 // }
-    //             }
-    //         }
-    //     }
-    // }
-}
-
 fn leave_menu(mut dialog_message: ResMut<ActiveMenu>) {
-    info!("left menu");
     dialog_message.reset();
 }
 
